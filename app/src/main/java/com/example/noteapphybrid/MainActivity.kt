@@ -101,7 +101,7 @@ class MainActivity : ComponentActivity() {
                 }
 
                 composable("login") {
-                    LoginScreen()
+                    LoginScreen(navController)
                 }
             }
         }
