@@ -8,6 +8,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -43,7 +44,7 @@ fun OnboardingScreen(onCompleteOnboarding: () -> Unit) {
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
                 .padding(16.dp),
-            activeColor = Color.Blue,
+            activeColor = colorResource(id = R.color.main_color),
             inactiveColor = Color.Gray
         )
 
@@ -57,7 +58,8 @@ fun OnboardingScreen(onCompleteOnboarding: () -> Unit) {
             if (pagerState.currentPage > 0) {
                 Button(
                     onClick = { scope.launch { pagerState.animateScrollToPage(pagerState.currentPage - 1) } },
-                    shape = RoundedCornerShape(12.dp)
+                    shape = RoundedCornerShape(12.dp),
+                    colors = ButtonDefaults.buttonColors(containerColor = colorResource(id = R.color.dark))
                 ) {
                     Text("Prev")
                 }
@@ -67,14 +69,15 @@ fun OnboardingScreen(onCompleteOnboarding: () -> Unit) {
                 Button(
                     onClick = { onCompleteOnboarding() },
                     shape = RoundedCornerShape(12.dp),
-                    colors = ButtonDefaults.buttonColors(containerColor = Color.Green)
+                    colors = ButtonDefaults.buttonColors(containerColor = colorResource(id = R.color.main_color))
                 ) {
                     Text("Get Started")
                 }
             } else {
                 Button(
                     onClick = { scope.launch { pagerState.animateScrollToPage(pagerState.currentPage + 1) } },
-                    shape = RoundedCornerShape(12.dp)
+                    shape = RoundedCornerShape(12.dp),
+                    colors = ButtonDefaults.buttonColors(containerColor = colorResource(id = R.color.dark))
                 ) {
                     Text("Next")
                 }
