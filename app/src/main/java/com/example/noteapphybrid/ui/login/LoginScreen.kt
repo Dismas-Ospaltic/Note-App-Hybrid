@@ -1,5 +1,7 @@
 package com.example.noteapphybrid.ui.login
 
+import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material.icons.filled.VisibilityOff
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -10,6 +12,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -21,8 +26,10 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -44,6 +51,10 @@ fun LoginScreen(navController: NavController, modifier: Modifier = Modifier) {
     val email = remember { mutableStateOf("") }
     val password = remember { mutableStateOf("") }
 
+    // State for showing/hiding passwords
+    var passwordVisible by remember { mutableStateOf(false) }
+    var confirmPasswordVisible by remember { mutableStateOf(false) }
+
     // Access the context using LocalContext.current
     val context = LocalContext.current
 
@@ -61,7 +72,16 @@ fun LoginScreen(navController: NavController, modifier: Modifier = Modifier) {
             value = email.value,
             onValueChange = { email.value = it },
             label = { Text("Email") },
-//            modifier = Modifier.fillMaxSize(),
+            leadingIcon = {
+                Icon(imageVector = Icons.Default.Email, contentDescription = "Email Icon")
+            },
+            trailingIcon = {
+                val icon = if (passwordVisible) Icons.Default.VisibilityOff else Icons.Default.Visibility
+                IconButton(onClick = { passwordVisible = !passwordVisible }) {
+                    Icon(imageVector = icon, contentDescription = "Toggle Password Visibility")
+                }
+            },
+            modifier = Modifier.fillMaxWidth(),
             singleLine = true,
             colors = TextFieldDefaults.outlinedTextFieldColors(
                 focusedBorderColor = Color.Blue,
@@ -76,7 +96,10 @@ fun LoginScreen(navController: NavController, modifier: Modifier = Modifier) {
             value = password.value,
             onValueChange = { password.value = it },
             label = { Text("Password") },
-//            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier.fillMaxWidth(),
+            leadingIcon = {
+                Icon(imageVector = Icons.Default.Lock, contentDescription = "Password Icon")
+            },
             singleLine = true,
             colors = TextFieldDefaults.outlinedTextFieldColors(
                 focusedBorderColor = Color.Blue,
@@ -110,8 +133,8 @@ fun LoginScreen(navController: NavController, modifier: Modifier = Modifier) {
             }
 
             Spacer(modifier = Modifier.width(16.dp))
-
-            TextButton(onClick = { navController.navigate("forgotPassword") }) {
+//            navController.navigate("forgotPassword")
+            TextButton(onClick = {  }) {
                 Text("Forgot Password?", fontSize = 14.sp)
             }
         }

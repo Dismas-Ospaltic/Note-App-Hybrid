@@ -15,6 +15,7 @@ import com.example.noteapphybrid.ui.home.HomeScreen
 import com.example.noteapphybrid.ui.login.LoginScreen
 import com.example.noteapphybrid.ui.newuser.NewUserScreen
 import com.example.noteapphybrid.ui.onboarding.OnboardingScreen
+import com.example.noteapphybrid.ui.signup.SignUpScreen
 import com.example.noteapphybrid.ui.splash.SplashScreen
 import com.example.noteapphybrid.viewmodel.MainViewModel
 import org.koin.androidx.compose.getViewModel
@@ -102,6 +103,11 @@ class MainActivity : ComponentActivity() {
 
                 composable("login") {
                     LoginScreen(navController)
+                }
+
+
+                composable("signup") {
+                   SignUpScreen(navController)
                 }
             }
         }
