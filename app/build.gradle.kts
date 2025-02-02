@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    id("io.realm.kotlin") version "1.13.0" // Specify the version here
 }
 
 android {
@@ -62,7 +63,8 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
 
 
-
+    //  this is for Material2 design
+    implementation("com.google.android.material:material:1.4.0")
 
     // Koin dependencies for dependency injection
     // Koin Core (required)
@@ -89,4 +91,8 @@ dependencies {
 
     // Accompanist Pager Indicators (for page indicators like dots)
     implementation("com.google.accompanist:accompanist-pager-indicators:0.25.0")
+
+
+    // MongoDB Realm (Kotlin SDK)
+    implementation("io.realm.kotlin:library-sync:1.13.0")
 }

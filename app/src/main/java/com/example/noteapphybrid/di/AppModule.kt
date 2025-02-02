@@ -3,7 +3,9 @@ package com.example.noteapphybrid.di
 
 
 import com.example.noteapphybrid.data.datastore.PreferencesManager
+import com.example.noteapphybrid.repository.NotesRepository
 import com.example.noteapphybrid.viewmodel.MainViewModel
+import com.example.noteapphybrid.viewmodel.NotesViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -13,4 +15,8 @@ val appModule = module {
 
     // Define PreferencesManager injection
     single { PreferencesManager(get()) }
+
+    //notes management
+    single { NotesRepository() }  // Provide NotesRepository as a singleton
+    viewModel { NotesViewModel(get()) }  // Inject NotesViewModel with Koin
 }
