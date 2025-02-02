@@ -2,7 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
-    id("io.realm.kotlin") version "1.13.0" // Specify the version here
+    id("io.realm.kotlin") version "2.3.0" // Specify the version here
 }
 
 android {
@@ -14,7 +14,7 @@ android {
         minSdk = 26
         targetSdk = 34
         versionCode = 1
-        versionName = "1.0"
+        versionName = "1.0.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -94,5 +94,5 @@ dependencies {
 
 
     // MongoDB Realm (Kotlin SDK)
-    implementation("io.realm.kotlin:library-sync:1.13.0")
+    implementation("io.realm.kotlin:library-sync:2.3.0")
 }

@@ -118,7 +118,9 @@ fun HomeScreen(viewModel: NotesViewModel = koinViewModel(), navController: NavCo
     Scaffold(
         bottomBar = { BottomNavigationBar(navController) }, // ✅ Pass NavController
         floatingActionButton = {
-            FloatingActionButton(onClick = { /* Handle Add Note */ }) {
+            FloatingActionButton(onClick = { /* Handle Add Note */
+                navController.navigate("add_note")
+            }) {
                 // Use icon from drawable folder using painterResource
                 Image(
                     painter = painterResource(id = R.drawable.add_dark), // Replace with your icon name
@@ -173,7 +175,9 @@ fun BottomNavigationBar(navController: NavController) {
         )
         BottomNavigationItem(
             selected = false,
-            onClick = { /* Handle To-Do */ },
+            onClick = { /* Handle To-Do */
+
+            },
             icon = {
                 // Use icon from drawable folder
                 Image(

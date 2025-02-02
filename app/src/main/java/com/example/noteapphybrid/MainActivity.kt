@@ -1,5 +1,6 @@
 package com.example.noteapphybrid
 
+import AddNoteScreen
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -108,6 +109,10 @@ class MainActivity : ComponentActivity() {
 
                 composable("signup") {
                    SignUpScreen(navController)
+                }
+
+                composable("add_note") {
+                    AddNoteScreen(navController = navController)
                 }
             }
         }
