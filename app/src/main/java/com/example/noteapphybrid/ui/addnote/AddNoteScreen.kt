@@ -94,7 +94,8 @@ fun AddNoteScreen(viewModel: NotesViewModel = koinViewModel(), navController: Na
                     keyboardType = KeyboardType.Text
                 ),
 //                maxLines = Int.MAX_VALUE // Allows unlimited lines
-                maxLines = 100
+                maxLines = 100,
+                singleLine = false // Allow multiline input
             )
 
             // Note Content TextField
@@ -123,7 +124,9 @@ fun AddNoteScreen(viewModel: NotesViewModel = koinViewModel(), navController: Na
                     }
                 }),
 //                maxLines = Int.MAX_VALUE // Allows unlimited lines
-                maxLines = 100
+                maxLines = 100,
+                singleLine = false // Allow multiline input
+
             )
         }
     }

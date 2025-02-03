@@ -233,7 +233,8 @@ fun LoginScreen(navController: NavController) { //, modifier: Modifier = Modifie
 
                 Toast.makeText(context, "Logging in...", Toast.LENGTH_SHORT).show()
                 // Add your login logic here
-                navController.navigate("home")
+//                navController.navigate("home")
+                navController.navigate("main")
             },
             modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(8.dp),

@@ -15,6 +15,7 @@ import androidx.navigation.compose.composable
 import com.example.noteapphybrid.ui.account.AccountScreen
 import com.example.noteapphybrid.ui.home.HomeScreen
 import com.example.noteapphybrid.ui.login.LoginScreen
+import com.example.noteapphybrid.ui.mainscreen.MainScreen
 import com.example.noteapphybrid.ui.newuser.NewUserScreen
 import com.example.noteapphybrid.ui.onboarding.OnboardingScreen
 import com.example.noteapphybrid.ui.signup.SignUpScreen
@@ -23,7 +24,7 @@ import com.example.noteapphybrid.ui.todo.ToDoScreen
 import com.example.noteapphybrid.viewmodel.MainViewModel
 import org.koin.androidx.compose.getViewModel
 
-@AndroidEntryPoint
+
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,9 +66,9 @@ class MainActivity : ComponentActivity() {
                     NewUserScreen(navController)
                 }
 
-                composable("home") {
-                    HomeScreen(navController = navController)
-                }
+//                composable("home") {
+//                    HomeScreen(navController = navController)
+//                }
 
                 composable("login") {
                     LoginScreen(navController)
@@ -78,21 +79,24 @@ class MainActivity : ComponentActivity() {
                     SignUpScreen(navController)
                 }
 
-                composable("add_note") {
-                    AddNoteScreen(navController = navController)
+
+
+//                composable("to_do") {
+//                    ToDoScreen(navController = navController) //
+//                }
+//
+//                composable("account") {
+//                    AccountScreen(navController = navController) //
+//                }
+
+                // Wrap Home, ToDo, and Account inside MainScreen
+                composable("main") {
+                    MainScreen()
                 }
 
-                composable("to_do") {
-                    ToDoScreen(navController = navController) //
-                }
-
-                composable("account") {
-                    AccountScreen(navController = navController) //
-                }
             }
         }
     }
 }
 
 
-annotation class AndroidEntryPoint

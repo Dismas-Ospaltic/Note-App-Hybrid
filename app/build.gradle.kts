@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     id("io.realm.kotlin") version "2.3.0" // Specify the version here
+    kotlin("kapt")
 }
 
 android {
@@ -116,4 +117,12 @@ dependencies {
     // Lifecycle (to work with ViewModel)
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
+
+
+    // Room dependencies
+    implementation("androidx.room:room-runtime:2.4.3")
+    kapt("androidx.room:room-compiler:2.4.3")
+
+    // For coroutine support (if you're using suspend functions in DAO)
+    implementation("androidx.room:room-ktx:2.4.3")
 }
