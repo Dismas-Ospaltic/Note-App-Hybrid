@@ -151,7 +151,7 @@ import com.example.noteapphybrid.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LoginScreen(navController: NavController, modifier: Modifier = Modifier) {
+fun LoginScreen(navController: NavController) { //, modifier: Modifier = Modifier
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var emailError by remember { mutableStateOf(false) }

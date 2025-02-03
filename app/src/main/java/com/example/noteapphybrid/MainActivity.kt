@@ -12,49 +12,16 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.noteapphybrid.ui.account.AccountScreen
 import com.example.noteapphybrid.ui.home.HomeScreen
 import com.example.noteapphybrid.ui.login.LoginScreen
 import com.example.noteapphybrid.ui.newuser.NewUserScreen
 import com.example.noteapphybrid.ui.onboarding.OnboardingScreen
 import com.example.noteapphybrid.ui.signup.SignUpScreen
 import com.example.noteapphybrid.ui.splash.SplashScreen
+import com.example.noteapphybrid.ui.todo.ToDoScreen
 import com.example.noteapphybrid.viewmodel.MainViewModel
 import org.koin.androidx.compose.getViewModel
-import org.koin.androidx.compose.viewModel
-
-
-//@AndroidEntryPoint
-//class MainActivity : ComponentActivity() {
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//        setContent {
-//            val viewModel: MainViewModel = getViewModel()
-//            val isOnboardingCompleted by viewModel.isOnboardingCompleted.collectAsState(initial = false)
-//
-//            val navController = rememberNavController()
-//
-//            NavHost(navController = navController, startDestination = "splash") {
-//                composable("splash") {
-//                    SplashScreen {
-//                        if (isOnboardingCompleted) {
-//                            navController.navigate("newuser") {
-//                                popUpTo("splash") { inclusive = true }
-//                            }
-//                        } else {
-//                            navController.navigate("onboarding") {
-//                                popUpTo("splash") { inclusive = true }
-//                            }
-//                        }
-//                    }
-//                }
-//                composable("onboarding") { OnboardingScreen { viewModel.completeOnboarding() } }
-//                composable("home") { HomeScreen() }
-//                composable("newuser") { NewUserScreen(navController) }
-//            }
-//        }
-//    }
-//}
-
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -108,11 +75,19 @@ class MainActivity : ComponentActivity() {
 
 
                 composable("signup") {
-                   SignUpScreen(navController)
+                    SignUpScreen(navController)
                 }
 
                 composable("add_note") {
                     AddNoteScreen(navController = navController)
+                }
+
+                composable("to_do") {
+                    ToDoScreen(navController = navController) //
+                }
+
+                composable("account") {
+                    AccountScreen(navController = navController) //
                 }
             }
         }

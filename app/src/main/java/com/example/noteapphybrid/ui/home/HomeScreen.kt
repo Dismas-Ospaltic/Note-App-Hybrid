@@ -1,95 +1,5 @@
 package com.example.noteapphybrid.ui.home
 
-
-//import androidx.compose.foundation.layout.*
-//import androidx.compose.foundation.lazy.LazyColumn
-//import androidx.compose.foundation.lazy.items
-//import androidx.compose.material.icons.Icons
-//import androidx.compose.material.icons.filled.Add
-//import androidx.compose.material3.Card
-//import androidx.compose.material3.MaterialTheme
-//import androidx.compose.material3.Scaffold
-//import androidx.compose.material3.Text
-//import androidx.compose.runtime.Composable
-//import androidx.compose.runtime.collectAsState
-//import androidx.compose.runtime.getValue
-//import androidx.compose.ui.Alignment
-//import androidx.compose.ui.Modifier
-//import androidx.compose.ui.tooling.preview.Preview
-//import androidx.compose.ui.unit.dp
-//import androidx.compose.ui.unit.sp
-//import androidx.navigation.NavController
-//import androidx.navigation.compose.rememberNavController
-//import com.example.noteapphybrid.model.Note
-//import com.example.noteapphybrid.ui.login.LoginScreen
-//import com.example.noteapphybrid.viewmodel.NotesViewModel
-//import org.koin.androidx.compose.koinViewModel
-//
-//@Composable
-//fun HomeScreen(viewModel: NotesViewModel = koinViewModel(), navController: NavController) {
-//    val notes by viewModel.notes.collectAsState(initial = emptyList())
-//
-//    Scaffold(
-//        bottomBar = { BottomNavigationBar() },
-//        floatingActionButton = {
-//            FloatingActionButton(onClick = { /* Handle Add Note */ }) {
-//                Icon(Icons.Default.Add, contentDescription = "Add Note")
-//            }
-//        }
-//    ) {
-//        LazyColumn(modifier = Modifier.padding(it)) {
-//            items(notes) { note ->
-//                NoteItem(note)
-//            }
-//        }
-//    }
-//}
-//
-//@Composable
-//fun NoteItem(note: Note) {
-//    Card(
-//        modifier = Modifier
-//            .fillMaxWidth()
-//            .padding(8.dp),
-//        elevation = 4.dp
-//    ) {
-//        Column(modifier = Modifier.padding(16.dp)) {
-//            Text(note.title, style = MaterialTheme.typography.h6)
-//            Spacer(modifier = Modifier.height(4.dp))
-//            Text(note.details, style = MaterialTheme.typography.body2)
-//            Spacer(modifier = Modifier.height(8.dp))
-//            Text(note.date, style = MaterialTheme.typography.caption)
-//        }
-//    }
-//}
-//
-//@Composable
-//fun BottomNavigationBar() {
-//    BottomNavigation(backgroundColor = Color.White) {
-//        BottomNavigationItem(
-//            selected = true,
-//            onClick = { /* Handle Notes */ },
-//            icon = { Icon(Icons.Default.Notes, contentDescription = "Notes") },
-//            label = { Text("Notes") }
-//        )
-//        BottomNavigationItem(
-//            selected = false,
-//            onClick = { /* Handle To-Do */ },
-//            icon = { Icon(Icons.Default.Check, contentDescription = "To-Do") },
-//            label = { Text("To-Do") }
-//        )
-//    }
-//}
-//
-//@Preview(showBackground = true)
-//@Composable
-//fun HomeScreenPreview() {
-//    HomeScreen(navController = rememberNavController())
-//}
-
-
-
-
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -111,11 +21,15 @@ import androidx.compose.ui.res.painterResource
 import com.example.noteapphybrid.R
 import com.example.noteapphybrid.model.Note
 import com.example.noteapphybrid.repository.NotesRepository
+import com.example.noteapphybrid.ui.components.BottomNavigationBar
 import com.example.noteapphybrid.viewmodel.NotesViewModel
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun HomeScreen(viewModel: NotesViewModel = koinViewModel(), navController: NavController) {
+
+    var selectedIndex by remember { mutableStateOf(0) }
+
     val notes by viewModel.notes.collectAsState(initial = emptyList())
 
     Scaffold(
@@ -136,7 +50,8 @@ fun HomeScreen(viewModel: NotesViewModel = koinViewModel(), navController: NavCo
 
             )
         },
-        bottomBar = { BottomNavigationBar(navController) }, // ✅ Pass NavController
+//        bottomBar = { BottomNavigationBar(navController) }, // ✅ Pass NavController
+        bottomBar = { BottomNavigationBar(navController, selectedIndex) { selectedIndex = it } },
         floatingActionButton = {
             FloatingActionButton(onClick = { /* Handle Add Note */
                 navController.navigate("add_note")
@@ -179,40 +94,73 @@ fun NoteItem(note: Note) {
 }
 
 
-@Composable
-fun BottomNavigationBar(navController: NavController) {
-    BottomNavigation(
-        backgroundColor = Color.White,
-        modifier = Modifier.fillMaxWidth()
-    ) {
-        BottomNavigationItem(
-            selected = true,
-            onClick = { /* Handle Notes */ },
-            icon = {
-                // Use icon from drawable folder
-                Image(
-                    painter = painterResource(id = R.drawable.note_gray), // Replace with your icon name
-                    contentDescription = "Notes"
-                )
-            },
-            label = { Text("Notes") }
-        )
-        BottomNavigationItem(
-            selected = false,
-            onClick = { /* Handle To-Do */
+//@Composable
+//fun BottomNavigationBar(navController: NavController) {
+//    var selectedIndex by remember { mutableStateOf(0) }
+//
+//    BottomNavigation(
+//        backgroundColor = Color.White,
+//        modifier = Modifier.fillMaxWidth()
+//    ) {
+//        BottomNavigationItem(
+//            selected = selectedIndex == 0,
+//            onClick = { selectedIndex = 0 },
+//            icon = {
+//                Image(
+//                    painter = painterResource(
+//                        id = if (selectedIndex == 0) R.drawable.notes_green else R.drawable.note_gray
+//                    ),
+//                    contentDescription = "Notes"
+//                )
+//            },
+//            label = {
+//                Text(
+//                    "Notes",
+//                    color = if (selectedIndex == 0) Color.Green else Color.Gray // Text color change
+//                )
+//            }
+//        )
+//        BottomNavigationItem(
+//            selected = selectedIndex == 1,
+//            onClick = { selectedIndex = 1 },
+//            icon = {
+//                Image(
+//                    painter = painterResource(
+//                        id = if (selectedIndex == 1) R.drawable.todo_green else R.drawable.todo_gray
+//                    ),
+//                    contentDescription = "To-Do"
+//                )
+//            },
+//            label = {
+//                Text(
+//                    "To-Do",
+//                    color = if (selectedIndex == 1) Color.Green else Color.Gray // Text color change
+//                )
+//            }
+//        )
+//
+//        BottomNavigationItem(
+//            selected = selectedIndex == 1,
+//            onClick = { selectedIndex = 1 },
+//            icon = {
+//                Image(
+//                    painter = painterResource(
+//                        id = if (selectedIndex == 1) R.drawable.user_green else R.drawable.user_gray
+//                    ),
+//                    contentDescription = "User account"
+//                )
+//            },
+//            label = {
+//                Text(
+//                    "Account",
+//                    color = if (selectedIndex == 1) Color.Green else Color.Gray // Text color change
+//                )
+//            }
+//        )
+//    }
+//}
 
-            },
-            icon = {
-                // Use icon from drawable folder
-                Image(
-                    painter = painterResource(id = R.drawable.todo_gray), // Replace with your icon name
-                    contentDescription = "To-Do"
-                )
-            },
-            label = { Text("To-Do") }
-        )
-    }
-}
+
 
 @Preview(showBackground = true)
 @Composable
