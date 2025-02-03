@@ -28,7 +28,7 @@ fun SplashScreen(onNavigate: () -> Unit) {
                 modifier = Modifier.size(150.dp)
             )
             Spacer(modifier = Modifier.height(16.dp))
-            Text(text = "Welcome to My App", fontWeight = FontWeight.Bold, fontSize = 24.sp)
+            Text(text = "Welcome to Hybrid Note App", fontWeight = FontWeight.Bold, fontSize = 24.sp)
         }
     }
 }

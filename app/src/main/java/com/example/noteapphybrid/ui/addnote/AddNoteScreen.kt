@@ -6,9 +6,11 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Check
+import androidx.compose.material3.FloatingActionButtonDefaults.containerColor
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -17,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.example.noteapphybrid.R
 import com.example.noteapphybrid.viewmodel.NotesViewModel
 import com.example.noteapphybrid.model.Note
 import com.example.noteapphybrid.repository.NotesRepository
@@ -44,7 +47,9 @@ fun AddNoteScreen(viewModel: NotesViewModel = koinViewModel(), navController: Na
                     }) {
                         Icon(Icons.Default.ArrowBack, contentDescription = "Back")
                     }
-                }
+                },
+                backgroundColor = colorResource(id = R.color.white)
+
             )
         },
         floatingActionButton = {
@@ -56,7 +61,9 @@ fun AddNoteScreen(viewModel: NotesViewModel = koinViewModel(), navController: Na
                         viewModel.addNote(note)
                         navController.popBackStack()  // Navigate back after saving
                     }
+
                 }
+
             ) {
                 Icon(Icons.Default.Check, contentDescription = "Save Note")
             }
@@ -85,7 +92,8 @@ fun AddNoteScreen(viewModel: NotesViewModel = koinViewModel(), navController: Na
                 keyboardOptions = KeyboardOptions.Default.copy(
                     imeAction = ImeAction.Next,
                     keyboardType = KeyboardType.Text
-                )
+                ),
+                maxLines = Int.MAX_VALUE // Allows unlimited lines
             )
 
             // Note Content TextField
@@ -112,7 +120,8 @@ fun AddNoteScreen(viewModel: NotesViewModel = koinViewModel(), navController: Na
                         viewModel.addNote(note)
                         navController.popBackStack()  // Navigate back after saving
                     }
-                })
+                }),
+                maxLines = Int.MAX_VALUE // Allows unlimited lines
             )
         }
     }
