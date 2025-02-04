@@ -26,6 +26,7 @@ import com.example.noteapphybrid.repository.NotesRepository
 import org.koin.androidx.compose.koinViewModel
 import java.text.SimpleDateFormat
 import java.util.*
+import java.util.Date
 
 @Composable
 fun AddNoteScreen(viewModel: NotesViewModel = koinViewModel(), navController: NavController) {
@@ -33,8 +34,10 @@ fun AddNoteScreen(viewModel: NotesViewModel = koinViewModel(), navController: Na
     var title by remember { mutableStateOf("") }
     var noteContent by remember { mutableStateOf("") }
 
-    // Get the current date
-    val currentDate = remember { SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date()) }
+//    // Get the current date
+//    val currentDate = remember { SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date()) }
+// Get the current date in Long format
+    val currentDate = remember { System.currentTimeMillis() }
 
     Scaffold(
         topBar = {

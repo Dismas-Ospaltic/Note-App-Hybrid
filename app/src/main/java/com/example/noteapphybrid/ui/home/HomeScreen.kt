@@ -118,9 +118,13 @@ import com.example.noteapphybrid.model.Note
 import com.example.noteapphybrid.repository.NotesRepository
 import com.example.noteapphybrid.viewmodel.NotesViewModel
 import org.koin.androidx.compose.koinViewModel
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 @Composable
 fun HomeScreen(viewModel: NotesViewModel = koinViewModel(), navController: NavController) {
+
 
     val notes by viewModel.notes.collectAsState(initial = emptyList())
 
@@ -142,6 +146,8 @@ fun HomeScreen(viewModel: NotesViewModel = koinViewModel(), navController: NavCo
             items(notes) { note -> NoteItem(note) }
         }
     }
+
+
 }
 
 @Composable
@@ -153,7 +159,18 @@ fun NoteItem(note: Note) {
         Column(modifier = Modifier.padding(16.dp)) {
             Text(note.title, style = MaterialTheme.typography.titleLarge)
             Text(note.details, style = MaterialTheme.typography.bodyMedium)
-            Text(note.date, style = MaterialTheme.typography.bodySmall)
+//            Text(note.date, style = MaterialTheme.typography.bodySmall)
+            Text(
+                text = convertLongToDate(note.date),
+                style = MaterialTheme.typography.bodySmall
+            )
         }
+
     }
+}
+
+// Function to convert Long timestamp to a readable date string
+fun convertLongToDate(time: Long): String {
+    val format = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+    return format.format(Date(time))
 }
