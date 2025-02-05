@@ -2,8 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
-    id("io.realm.kotlin") version "2.3.0" // Specify the version here
-    kotlin("kapt")
+    id("com.google.devtools.ksp") version "2.0.20-1.0.25"
 }
 
 android {
@@ -94,9 +93,6 @@ dependencies {
     implementation("com.google.accompanist:accompanist-pager-indicators:0.25.0")
 
 
-    // MongoDB Realm (Kotlin SDK)
-    implementation("io.realm.kotlin:library-sync:2.3.0")
-
 
 
     // Retrofit (Core Library)
@@ -120,9 +116,9 @@ dependencies {
 
 
     // Room dependencies
-    implementation("androidx.room:room-runtime:2.4.3")
-    kapt("androidx.room:room-compiler:2.4.3")
+    implementation("androidx.room:room-runtime:2.6.1")
+    ksp("androidx.room:room-compiler:2.6.1")
 
     // For coroutine support (if you're using suspend functions in DAO)
-    implementation("androidx.room:room-ktx:2.4.3")
+    implementation("androidx.room:room-ktx:2.6.1")
 }

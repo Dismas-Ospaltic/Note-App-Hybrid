@@ -13,9 +13,12 @@ import com.example.noteapphybrid.ui.components.BottomNavigationBar
 import com.example.noteapphybrid.ui.home.HomeScreen
 import com.example.noteapphybrid.ui.todo.ToDoScreen
 import androidx.navigation.compose.currentBackStackEntryAsState
+import com.example.noteapphybrid.data.local.AppDatabase
+import com.example.noteapphybrid.repository.NoteRepository
+import com.example.noteapphybrid.viewmodel.NoteViewModel
 
 @Composable
-fun MainScreen() {
+fun MainScreen(noteViewModel: NoteViewModel) {
     val navController = rememberNavController()
     val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
     val items = listOf("home", "to_do", "account")

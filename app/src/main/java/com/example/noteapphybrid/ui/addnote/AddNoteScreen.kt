@@ -20,19 +20,21 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.noteapphybrid.R
-import com.example.noteapphybrid.viewmodel.NotesViewModel
-import com.example.noteapphybrid.model.Note
-import com.example.noteapphybrid.repository.NotesRepository
+import com.example.noteapphybrid.model.NoteEntity
+import com.example.noteapphybrid.viewmodel.NoteViewModel
 import org.koin.androidx.compose.koinViewModel
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.Date
 
 @Composable
-fun AddNoteScreen(viewModel: NotesViewModel = koinViewModel(), navController: NavController) {
+fun AddNoteScreen(navController: NavController, noteViewModel: NoteViewModel = koinViewModel()) {
     // Mutable states to store the input values.
+//    var title by remember { mutableStateOf("") }
+//    var noteContent by remember { mutableStateOf("") }
+
     var title by remember { mutableStateOf("") }
-    var noteContent by remember { mutableStateOf("") }
+    var content by remember { mutableStateOf("") }
 
 //    // Get the current date
 //    val currentDate = remember { SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date()) }
@@ -58,10 +60,9 @@ fun AddNoteScreen(viewModel: NotesViewModel = koinViewModel(), navController: Na
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
-                    if (title.isNotBlank() && noteContent.isNotBlank()) {
+                    if (title.isNotBlank() && content.isNotBlank()) {
                         // Save the note via ViewModel and navigate back
-                        val note = Note(title = title, details = noteContent, date = currentDate)
-                        viewModel.addNote(note)
+                        noteViewModel.insert(NoteEntity(title = title, content = content))
                         navController.popBackStack()  // Navigate back after saving
                     }
 
@@ -103,14 +104,14 @@ fun AddNoteScreen(viewModel: NotesViewModel = koinViewModel(), navController: Na
 
             // Note Content TextField
             BasicTextField(
-                value = noteContent,
-                onValueChange = { noteContent = it },
+                value = content,
+                onValueChange = { content = it },
                 textStyle = TextStyle(fontSize = 18.sp, color = Color.Black),
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(vertical = 8.dp),
                 decorationBox = { innerTextField ->
-                    if (noteContent.isEmpty()) {
+                    if (content.isEmpty()) {
                         Text("Note something down", color = Color.Gray, fontSize = 18.sp)
                     }
                     innerTextField()
@@ -120,9 +121,8 @@ fun AddNoteScreen(viewModel: NotesViewModel = koinViewModel(), navController: Na
                     keyboardType = KeyboardType.Text
                 ),
                 keyboardActions = KeyboardActions(onDone = {
-                    if (title.isNotBlank() && noteContent.isNotBlank()) {
-                        val note = Note(title = title, details = noteContent, date = currentDate)
-                        viewModel.addNote(note)
+                    if (title.isNotBlank() && content.isNotBlank()) {
+                        noteViewModel.insert(NoteEntity(title = title, content = content))
                         navController.popBackStack()  // Navigate back after saving
                     }
                 }),
@@ -138,5 +138,5 @@ fun AddNoteScreen(viewModel: NotesViewModel = koinViewModel(), navController: Na
 @Preview(showBackground = true)
 @Composable
 fun AddNoteScreenPreview() {
-    AddNoteScreen(viewModel = NotesViewModel(NotesRepository()), navController = rememberNavController())
+    AddNoteScreen(navController = rememberNavController())
 }

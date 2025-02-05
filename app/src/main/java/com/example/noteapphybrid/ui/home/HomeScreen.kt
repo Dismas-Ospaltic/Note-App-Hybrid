@@ -114,19 +114,17 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.noteapphybrid.R
-import com.example.noteapphybrid.model.Note
-import com.example.noteapphybrid.repository.NotesRepository
-import com.example.noteapphybrid.viewmodel.NotesViewModel
+import com.example.noteapphybrid.model.NoteEntity
+import com.example.noteapphybrid.viewmodel.NoteViewModel
 import org.koin.androidx.compose.koinViewModel
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
 @Composable
-fun HomeScreen(viewModel: NotesViewModel = koinViewModel(), navController: NavController) {
+fun HomeScreen(navController: NavController, noteViewModel: NoteViewModel = koinViewModel()) {
 
-
-    val notes by viewModel.notes.collectAsState(initial = emptyList())
+    val notes by noteViewModel.notes.collectAsState()
 
     Scaffold(
         topBar = {
@@ -143,7 +141,11 @@ fun HomeScreen(viewModel: NotesViewModel = koinViewModel(), navController: NavCo
         }
     ) { paddingValues ->
         LazyColumn(modifier = Modifier.padding(paddingValues)) {
-            items(notes) { note -> NoteItem(note) }
+//            items(notes) { note -> NoteItem(note) }
+
+            items(notes) { note ->
+                NoteItem(note, onDelete = { noteViewModel.delete(note) })
+            }
         }
     }
 
@@ -151,17 +153,17 @@ fun HomeScreen(viewModel: NotesViewModel = koinViewModel(), navController: NavCo
 }
 
 @Composable
-fun NoteItem(note: Note) {
+fun NoteItem(note: NoteEntity, onDelete: () -> Unit) {
     Card(
         modifier = Modifier.fillMaxWidth().padding(8.dp),
         colors = CardDefaults.cardColors(containerColor = colorResource(id = R.color.transparent_dark))
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             Text(note.title, style = MaterialTheme.typography.titleLarge)
-            Text(note.details, style = MaterialTheme.typography.bodyMedium)
+            Text(note.content, style = MaterialTheme.typography.bodyMedium)
 //            Text(note.date, style = MaterialTheme.typography.bodySmall)
             Text(
-                text = convertLongToDate(note.date),
+                text = convertLongToDate(note.timestamp),
                 style = MaterialTheme.typography.bodySmall
             )
         }

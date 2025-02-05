@@ -2,13 +2,12 @@ package com.example.noteapphybrid.di
 
 
 
-import android.content.Context
-import androidx.datastore.preferences.preferencesDataStore
 import com.example.noteapphybrid.data.datastore.PreferencesManager
 import com.example.noteapphybrid.data.datastore.UserPreferencesManager
-import com.example.noteapphybrid.repository.NotesRepository
+import com.example.noteapphybrid.data.local.AppDatabase
+import com.example.noteapphybrid.repository.NoteRepository
 import com.example.noteapphybrid.viewmodel.MainViewModel
-import com.example.noteapphybrid.viewmodel.NotesViewModel
+import com.example.noteapphybrid.viewmodel.NoteViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -27,6 +26,14 @@ val appModule = module {
     single { UserPreferencesManager(androidContext()) }
 
     //notes management
-    single { NotesRepository() }  // Provide NotesRepository as a singleton
-    viewModel { NotesViewModel(get()) }  // Inject NotesViewModel with Koin
+//    single { NotesRepository() }  // Provide NotesRepository as a singleton
+//    viewModel { NotesViewModel(get()) }  // Inject NotesViewModel with Koin
+//    single { AppDatabase.getDatabase(context = get()).noteDao() }
+//    single { NoteRepository(noteDao = get()) }
+//    viewModel { NoteViewModel(repository = get()) }
+
+    single { AppDatabase.getDatabase(get()).noteDao() }
+    single { NoteRepository(get()) }
+    viewModel { NoteViewModel(get()) }
 }
+
