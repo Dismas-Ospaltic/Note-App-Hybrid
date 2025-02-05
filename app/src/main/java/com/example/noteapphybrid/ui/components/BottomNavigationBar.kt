@@ -86,6 +86,7 @@ import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -105,7 +106,7 @@ fun BottomNavigationBar(navController: NavController) {
             icon = {
                 Image(
                     painter = painterResource(
-                        id = if (selectedIndex == 0) R.drawable.notes_green else R.drawable.note_gray
+                        id = if (selectedIndex == 0) R.drawable.notes_teal else R.drawable.note_gray
                     ),
                     contentDescription = "Notes"
                 )
@@ -113,7 +114,7 @@ fun BottomNavigationBar(navController: NavController) {
             label = {
                 Text(
                     "Notes",
-                    color = if (selectedIndex == 0) Color.Green else Color.Gray
+                    color = if (selectedIndex == 0) colorResource(id = R.color.teal_700) else Color.Gray
                 )
             }
         )
@@ -124,7 +125,7 @@ fun BottomNavigationBar(navController: NavController) {
             icon = {
                 Image(
                     painter = painterResource(
-                        id = if (selectedIndex == 1) R.drawable.todo_green else R.drawable.todo_gray
+                        id = if (selectedIndex == 1) R.drawable.todo_teal else R.drawable.todo_gray
                     ),
                     contentDescription = "To-Do"
                 )
@@ -132,7 +133,7 @@ fun BottomNavigationBar(navController: NavController) {
             label = {
                 Text(
                     "To-Do",
-                    color = if (selectedIndex == 1) Color.Green else Color.Gray
+                    color = if (selectedIndex == 1) colorResource(id = R.color.teal_700) else Color.Gray
                 )
             }
         )
@@ -143,7 +144,7 @@ fun BottomNavigationBar(navController: NavController) {
             icon = {
                 Image(
                     painter = painterResource(
-                        id = if (selectedIndex == 2) R.drawable.user_green else R.drawable.user_gray
+                        id = if (selectedIndex == 2) R.drawable.user_teal else R.drawable.user_gray
                     ),
                     contentDescription = "Account"
                 )
@@ -151,7 +152,7 @@ fun BottomNavigationBar(navController: NavController) {
             label = {
                 Text(
                     "Account",
-                    color = if (selectedIndex == 2) Color.Green else Color.Gray
+                    color = if (selectedIndex == 2) colorResource(id = R.color.teal_700) else Color.Gray
                 )
             }
         )

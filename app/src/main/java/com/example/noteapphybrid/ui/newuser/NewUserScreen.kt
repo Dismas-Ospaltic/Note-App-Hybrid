@@ -1,6 +1,5 @@
 package com.example.noteapphybrid.ui.newuser
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
@@ -32,8 +31,8 @@ fun NewUserScreen(navController: NavController) {
             // Login Button
             Button(
                 onClick = { navController.navigate("login") },
-                shape = RoundedCornerShape(12.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = colorResource(id = R.color.dark)),
+                shape = RoundedCornerShape(2.dp),
+                colors = ButtonDefaults.buttonColors(containerColor = colorResource(id = R.color.darkLight)),
                 modifier = Modifier.fillMaxWidth().padding(horizontal = 32.dp) // Add padding for better layout
             ) {
                 Icon(
@@ -51,8 +50,8 @@ fun NewUserScreen(navController: NavController) {
             // Google Sign-In Button
             Button(
                 onClick = { continueWithGoogle() },
-                shape = RoundedCornerShape(12.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = colorResource(id = R.color.main_color)),
+                shape = RoundedCornerShape(2.dp),
+                colors = ButtonDefaults.buttonColors(containerColor = colorResource(id = R.color.shadeBlue)),
                 modifier = Modifier.fillMaxWidth().padding(horizontal = 32.dp) // Add padding for better layout
             ) {
                 Icon(
@@ -70,8 +69,8 @@ fun NewUserScreen(navController: NavController) {
             // Facebook Sign-In Button
             Button(
                 onClick = { /* Facebook Login */ },
-                shape = RoundedCornerShape(12.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = colorResource(id = R.color.green)),
+                shape = RoundedCornerShape(2.dp),
+                colors = ButtonDefaults.buttonColors(containerColor = colorResource(id = R.color.teal_700)),
                 modifier = Modifier.fillMaxWidth().padding(horizontal = 32.dp) // Add padding for better layout
 
             ) {

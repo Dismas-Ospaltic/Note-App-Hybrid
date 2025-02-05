@@ -62,7 +62,7 @@ fun AddNoteScreen(navController: NavController, noteViewModel: NoteViewModel = k
                 onClick = {
                     if (title.isNotBlank() && content.isNotBlank()) {
                         // Save the note via ViewModel and navigate back
-                        noteViewModel.insert(NoteEntity(title = title, content = content))
+                        noteViewModel.insert(NoteEntity(title = title, noteId= generateUniqueId(), content = content))
                         navController.popBackStack()  // Navigate back after saving
                     }
 
@@ -102,6 +102,37 @@ fun AddNoteScreen(navController: NavController, noteViewModel: NoteViewModel = k
                 singleLine = false // Allow multiline input
             )
 
+//            // Note Content TextField
+//            BasicTextField(
+//                value = content,
+//                onValueChange = { content = it },
+//                textStyle = TextStyle(fontSize = 18.sp, color = Color.Black),
+//                modifier = Modifier
+//                    .fillMaxSize()
+//                    .padding(vertical = 8.dp),
+//                decorationBox = { innerTextField ->
+//                    if (content.isEmpty()) {
+//                        Text("Note something down", color = Color.Gray, fontSize = 18.sp)
+//                    }
+//                    innerTextField()
+//                },
+//                keyboardOptions = KeyboardOptions.Default.copy(
+//                    imeAction = ImeAction.Done,
+//                    keyboardType = KeyboardType.Text
+//                ),
+//                keyboardActions = KeyboardActions(onDone = {
+//                    if (title.isNotBlank() && content.isNotBlank()) {
+//                        noteViewModel.insert(NoteEntity(title = title, noteId= generateUniqueId(), content = content))
+//                        navController.popBackStack()  // Navigate back after saving
+//                    }
+//                }),
+////                maxLines = Int.MAX_VALUE // Allows unlimited lines
+//                maxLines = 100,
+//                singleLine = false // Allow multiline input
+//
+//            )
+
+
             // Note Content TextField
             BasicTextField(
                 value = content,
@@ -117,20 +148,18 @@ fun AddNoteScreen(navController: NavController, noteViewModel: NoteViewModel = k
                     innerTextField()
                 },
                 keyboardOptions = KeyboardOptions.Default.copy(
-                    imeAction = ImeAction.Done,
+                    imeAction = ImeAction.None, // Set to None to prevent the "Done" action
                     keyboardType = KeyboardType.Text
                 ),
-                keyboardActions = KeyboardActions(onDone = {
-                    if (title.isNotBlank() && content.isNotBlank()) {
-                        noteViewModel.insert(NoteEntity(title = title, content = content))
-                        navController.popBackStack()  // Navigate back after saving
+                keyboardActions = KeyboardActions(
+                    onDone = {
+                        // Handle the "Done" action if needed
                     }
-                }),
-//                maxLines = Int.MAX_VALUE // Allows unlimited lines
-                maxLines = 100,
+                ),
+                maxLines = Int.MAX_VALUE, // Allows unlimited lines
                 singleLine = false // Allow multiline input
-
             )
+
         }
     }
 }
@@ -139,4 +168,9 @@ fun AddNoteScreen(navController: NavController, noteViewModel: NoteViewModel = k
 @Composable
 fun AddNoteScreenPreview() {
     AddNoteScreen(navController = rememberNavController())
+}
+
+
+fun generateUniqueId(): String {
+    return UUID.randomUUID().toString()
 }

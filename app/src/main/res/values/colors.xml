@@ -30,4 +30,8 @@
     <color name="wheat">#FBEFCA</color>
     <color name="orangeDeep">#F31707</color>
     <color name="damnOrange">#FA9A0D</color>
+
+    <color name="darkLight">#1F2937</color>
+    <color name="shadeBlue">#4285F4</color>
+
 </resources>
