@@ -106,7 +106,7 @@ fun HomeScreen(navController: NavController, noteViewModel: NoteViewModel = koin
                                 }
                             } else {
                                 // Handle regular click (e.g., navigate to note details)
-                                navController.navigate("note_detail/${note.noteId}")
+                                navController.navigate("edit_note/${note.noteId}")
                             }
                         }
                     )

@@ -2,10 +2,14 @@ package com.example.noteapphybrid.di
 
 
 
+import com.example.noteapphybrid.data.api.AuthService
+import com.example.noteapphybrid.data.api.RetrofitClient
 import com.example.noteapphybrid.data.datastore.PreferencesManager
 import com.example.noteapphybrid.data.datastore.UserPreferencesManager
 import com.example.noteapphybrid.data.local.AppDatabase
+import com.example.noteapphybrid.repository.AuthRepository
 import com.example.noteapphybrid.repository.NoteRepository
+import com.example.noteapphybrid.viewmodel.AuthViewModel
 import com.example.noteapphybrid.viewmodel.MainViewModel
 import com.example.noteapphybrid.viewmodel.NoteViewModel
 import org.koin.android.ext.koin.androidContext
@@ -35,5 +39,12 @@ val appModule = module {
     single { AppDatabase.getDatabase(get()).noteDao() }
     single { NoteRepository(get()) }
     viewModel { NoteViewModel(get()) }
+
+
+
+    single<AuthService> { RetrofitClient.createAuthService() }
+    single { AuthRepository(get()) }
+//    viewModel { AuthViewModel(get()) }
+    viewModel { AuthViewModel(get(), get()) }
 }
 

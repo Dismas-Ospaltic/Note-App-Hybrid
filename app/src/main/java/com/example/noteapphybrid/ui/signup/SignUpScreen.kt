@@ -224,6 +224,12 @@ fun SignUpScreen(navController: NavController) {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
+
+        val colors = TextFieldDefaults.colors(
+            focusedIndicatorColor = Color.Blue,
+            unfocusedIndicatorColor = Color.Gray
+        )
+
         Text(text = "Sign Up", fontSize = 24.sp, style = MaterialTheme.typography.headlineMedium)
 
         Spacer(modifier = Modifier.height(8.dp))
@@ -240,10 +246,7 @@ fun SignUpScreen(navController: NavController) {
             leadingIcon = { Icon(imageVector = Icons.Default.Email, contentDescription = "Email Icon") },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
             modifier = Modifier.fillMaxWidth(),
-            colors = TextFieldDefaults.outlinedTextFieldColors(
-                focusedBorderColor = Color.Blue,
-                unfocusedBorderColor = Color.Gray
-            ),
+            colors = colors,
             singleLine = true,
             isError = emailError
         )
@@ -272,10 +275,7 @@ fun SignUpScreen(navController: NavController) {
                 }
             },
             singleLine = true,
-            colors = TextFieldDefaults.outlinedTextFieldColors(
-                focusedBorderColor = Color.Blue,
-                unfocusedBorderColor = Color.Gray
-            ),
+            colors = colors,
             isError = passwordError
         )
         if (passwordError) {
@@ -303,10 +303,7 @@ fun SignUpScreen(navController: NavController) {
                 }
             },
             singleLine = true,
-            colors = TextFieldDefaults.outlinedTextFieldColors(
-                focusedBorderColor = Color.Blue,
-                unfocusedBorderColor = Color.Gray
-            ),
+            colors = colors,
             isError = confirmPasswordError
         )
         if (confirmPasswordError) {

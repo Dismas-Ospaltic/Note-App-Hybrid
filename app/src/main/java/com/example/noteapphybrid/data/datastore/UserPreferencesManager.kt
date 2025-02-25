@@ -15,7 +15,6 @@ private val Context.userDataStore: DataStore<androidx.datastore.preferences.core
 class UserPreferencesManager(private val context: Context) {
 
     companion object {
-        val USER_ID = stringPreferencesKey("user_id")
         val USER_EMAIL = stringPreferencesKey("user_email")
         val AUTH_TOKEN = stringPreferencesKey("auth_token")
         val REF_TOKEN = stringPreferencesKey("ref_token")
@@ -23,9 +22,8 @@ class UserPreferencesManager(private val context: Context) {
     }
 
     // Save user data
-    suspend fun saveUserData(userId: String, userEmail: String, authToken: String , refToken: String) {
+    suspend fun saveUserData(userEmail: String, authToken: String , refToken: String) {
         context.userDataStore.edit { preferences ->
-            preferences[USER_ID] = userId
             preferences[USER_EMAIL] = userEmail
             preferences[AUTH_TOKEN] = authToken
             preferences[REF_TOKEN] = refToken
@@ -36,7 +34,6 @@ class UserPreferencesManager(private val context: Context) {
     // Retrieve user data as Flow (to observe changes)
     val userData: Flow<UserData> = context.userDataStore.data.map { preferences ->
         UserData(
-            userId = preferences[USER_ID] ?: "",
             userEmail = preferences[USER_EMAIL] ?: "",
             authToken = preferences[AUTH_TOKEN] ?: "",
             refToken = preferences[REF_TOKEN] ?: "",
@@ -54,7 +51,6 @@ class UserPreferencesManager(private val context: Context) {
 
 // Data class for user data
 data class UserData(
-    val userId: String,
     val userEmail: String,
     val authToken: String,
     val refToken: String,

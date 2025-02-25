@@ -1,9 +1,12 @@
+package com.example.noteapphybrid.ui.addnote
+
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.FloatingActionButtonDefaults.containerColor
@@ -50,7 +53,7 @@ fun AddNoteScreen(navController: NavController, noteViewModel: NoteViewModel = k
                         // Use NavController to navigate back
                         navController.popBackStack()
                     }) {
-                        Icon(Icons.Default.ArrowBack, contentDescription = "Back")
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
                     }
                 },
                 backgroundColor = colorResource(id = R.color.white)
