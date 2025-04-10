@@ -6,15 +6,15 @@ plugins {
 }
 
 android {
-    namespace = "com.example.noteapphybrid"
+    namespace = "com.ossy.noteapphybrid"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.example.noteapphybrid"
+        applicationId = "com.ossy.noteapphybrid"
         minSdk = 26
         targetSdk = 34
-        versionCode = 1
-        versionName = "1.0.0"
+        versionCode = 3
+        versionName = "1.1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -122,4 +122,11 @@ dependencies {
 
     // For coroutine support (if you're using suspend functions in DAO)
     implementation("androidx.room:room-ktx:2.6.1")
+
+
+    //animation
+    implementation("com.google.accompanist:accompanist-navigation-animation:0.31.2-alpha")
+
+//for Dynamic Status Bar colors
+    implementation("com.google.accompanist:accompanist-systemuicontroller:0.31.2-alpha")
 }

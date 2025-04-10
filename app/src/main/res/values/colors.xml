@@ -7,6 +7,7 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="red">#8B0000</color>
 
 
     <color name="gray01">#c5c5c5</color>
@@ -33,5 +34,19 @@
 
     <color name="darkLight">#1F2937</color>
     <color name="shadeBlue">#4285F4</color>
+
+
+    <color name="tabBackground">#EEEEEE</color>
+    <color name="tabSelected">#1D2231</color>
+    <color name="tabUnselected">#f2f3f5</color>
+
+    <color name="bottom_bar_background">#FFFFFFFF</color>
+    <color name="tab_selected">#1D2231</color>
+    <color name="tab_unselected">#B0BEC5</color>
+    <color name="tab_indicator">#f2f3f5</color>
+
+
+    <color name="payNowButton">#0084FF</color>
+    <color name="viewHistoryButton">#FF9800</color>
 
 </resources>
