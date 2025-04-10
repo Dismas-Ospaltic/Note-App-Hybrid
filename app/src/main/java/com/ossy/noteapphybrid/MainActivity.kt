@@ -157,11 +157,11 @@ class MainActivity : ComponentActivity() {
                         BottomNavigationBar(navController)
                     }
                 },
-                floatingActionButton = {
-                    if (currentRoute == Screen.Home.route) { // Show FAB only on Home
-                        HomeFAB()
-                    }
-                }
+//                floatingActionButton = {
+//                    if (currentRoute == Screen.Home.route) { // Show FAB only on Home
+//                        HomeFAB()
+//                    }
+//                }
 
             ) { paddingValues ->
                 AppNavHost(navController, Modifier.padding(paddingValues))
@@ -186,7 +186,7 @@ fun BottomNavigationBar(navController: NavHostController) {
         // Top Divider
         HorizontalDivider(
             thickness = 1.dp, // Adjust thickness as needed
-            color = selectedColor
+            color = colorResource(id = R.color.border_color)
         )
         NavigationBar(
             containerColor = backgroundColor

@@ -18,6 +18,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.zIndex
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.ossy.noteapphybrid.R
@@ -44,6 +45,7 @@ fun AddNoteScreen(navController: NavController, noteViewModel: NoteViewModel = k
         topBar = {
             TopAppBar(
                 title = { Text("Add Note") },
+                modifier = Modifier.padding(top = WindowInsets.statusBars.asPaddingValues().calculateTopPadding()),
                 navigationIcon = {
                     IconButton(onClick = {
                         // Use NavController to navigate back
@@ -65,7 +67,11 @@ fun AddNoteScreen(navController: NavController, noteViewModel: NoteViewModel = k
                         navController.popBackStack()  // Navigate back after saving
                     }
 
-                }
+                },
+                backgroundColor = colorResource(id = R.color.teal_700),
+                modifier = Modifier
+                    .padding(bottom = 70.dp, end = 16.dp)
+                    .zIndex(1f)
 
             ) {
                 Icon(Icons.Default.Check, contentDescription = "Save Note")

@@ -15,6 +15,7 @@ import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.zIndex
 import androidx.navigation.NavController
 import com.ossy.noteapphybrid.R
 import com.ossy.noteapphybrid.model.NoteEntity
@@ -70,6 +71,9 @@ fun HomeScreen(navController: NavController, noteViewModel: NoteViewModel = koin
             FloatingActionButton(
                 onClick = { navController.navigate("add_note") },
                 containerColor = colorResource(id = R.color.teal_700),
+                modifier = Modifier
+                    .padding(bottom = 70.dp, end = 16.dp)
+                    .zIndex(1f)
             ) {
                 Icon(
                     painter = painterResource(id = R.drawable.add_white),
