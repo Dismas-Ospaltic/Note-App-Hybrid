@@ -36,6 +36,8 @@ fun EditNoteScreen(
         noteViewModel.getNoteDetails(noteId)
     }
 
+
+
     // Observe noteState
     val note by noteViewModel.noteState.collectAsState()
 
@@ -78,6 +80,7 @@ fun EditNoteScreen(
                             )
                         )
                         navController.popBackStack()  // Navigate back after saving
+
                     }
                 },
                 backgroundColor = colorResource(id = R.color.teal_700),

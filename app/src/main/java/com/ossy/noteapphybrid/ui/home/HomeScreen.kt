@@ -1,6 +1,7 @@
 package com.ossy.noteapphybrid.ui.home
 
 
+import android.widget.Toast
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.combinedClickable
@@ -12,6 +13,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
@@ -39,6 +41,8 @@ fun HomeScreen(navController: NavController) {
     val noteViewModel: NoteViewModel = koinViewModel()
     val notes by noteViewModel.notes.collectAsState()
     val selectedNotes = remember { mutableStateOf<Set<String>>(emptySet()) }
+    val context = LocalContext.current
+    var showDeleteDialog by remember { mutableStateOf(false) }
 
     val backgroundColor = colorResource(id = R.color.white)
     DynamicStatusBar(backgroundColor)
@@ -53,7 +57,18 @@ fun HomeScreen(navController: NavController) {
                     if (selectedNotes.value.isNotEmpty()) {
                         IconButton(onClick = {
                             // Handle delete action
-                            selectedNotes.value = emptySet()
+//                            selectedNotes.value = emptySet()
+                            showDeleteDialog = true
+
+//                            for (noteId in selectedNotes.value) {
+//                                val note = notes.find { it.noteId == noteId }
+//                                if (note != null) {
+//                                    noteViewModel.delete(note)
+//                                }
+//                            }
+//
+//                            Toast.makeText(context, "Delete: ${selectedNotes.value}", Toast.LENGTH_LONG).show()
+
                         }) {
                             Icon(
 //                                painter = painterResource(id = R.drawable.ic_delete),
@@ -80,6 +95,42 @@ fun HomeScreen(navController: NavController) {
                             )
                         }
                     }
+
+                    //alert dialog to confirm delete operation
+                    if (showDeleteDialog) {
+                        AlertDialog(
+                            onDismissRequest = { showDeleteDialog = false },
+                            title = { Text("Confirm Delete") },
+                            text = { Text("Are you sure you want to delete the selected notes?") },
+                            confirmButton = {
+                                TextButton(onClick = {
+                                    for (noteId in selectedNotes.value) {
+                                        val note = notes.find { it.noteId == noteId }
+                                        if (note != null) {
+                                            noteViewModel.delete(note)
+                                        }
+                                    }
+                                    Toast.makeText(context, "Deleted ${selectedNotes.value.size} notes", Toast.LENGTH_SHORT).show()
+                                    selectedNotes.value = emptySet()
+                                    showDeleteDialog = false
+                                }) {
+                                    Text(
+                                        text = "Delete",
+                                        color = colorResource(id = R.color.red)
+                                    )
+                                }
+                            },
+                            dismissButton = {
+                                TextButton(onClick = { showDeleteDialog = false }) {
+                                    Text(
+                                        text = "Cancel",
+                                        color = colorResource(id = R.color.teal_700)
+                                    )
+                                }
+                            }
+                        )
+                    }
+
                 }
             )
 
