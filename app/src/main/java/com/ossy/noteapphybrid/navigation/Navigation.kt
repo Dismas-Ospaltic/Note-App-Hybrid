@@ -11,11 +11,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import com.ossy.noteapphybrid.data.datastore.UserPreferencesManager
+import com.ossy.noteapphybrid.ui.aboutapp.AboutAppScreen
 import com.ossy.noteapphybrid.ui.account.AccountScreen
 import com.ossy.noteapphybrid.ui.addnote.AddNoteScreen
 import com.ossy.noteapphybrid.ui.editnote.EditNoteScreen
 import com.ossy.noteapphybrid.ui.home.HomeScreen
 import com.ossy.noteapphybrid.ui.login.LoginScreen
+import com.ossy.noteapphybrid.ui.manageaccount.ManageAccountScreen
 import com.ossy.noteapphybrid.ui.onboarding.OnboardingScreen
 import com.ossy.noteapphybrid.ui.signup.SignUpScreen
 import com.ossy.noteapphybrid.ui.splash.SplashScreen
@@ -31,6 +33,9 @@ sealed class Screen(val route: String) {
     object SignUp : Screen("signup")
     object Splash : Screen("splash")
     object Onboarding : Screen("onboarding")
+    object About : Screen("about")
+    object ManageAccount : Screen("manage_account")
+
 
     object EditNoteDetail : Screen("edit_note/{noteId}") {
         fun createRoute(noteId: String) = "edit_note/$noteId"
@@ -67,6 +72,8 @@ fun AppNavHost(navController: NavHostController, modifier: Modifier) {
         composable(Screen.AddNote.route) {  AddNoteScreen(navController) }
         composable(Screen.Login.route) {  LoginScreen(navController) }
         composable(Screen.SignUp.route) {  SignUpScreen(navController) }
+        composable(Screen.About.route) {  AboutAppScreen(navController) }
+        composable(Screen.ManageAccount.route) {  ManageAccountScreen(navController) }
 
         composable(Screen.EditNoteDetail.route) { backStackEntry ->
             val noteId = backStackEntry.arguments?.getString("noteId") ?: "Unknown"

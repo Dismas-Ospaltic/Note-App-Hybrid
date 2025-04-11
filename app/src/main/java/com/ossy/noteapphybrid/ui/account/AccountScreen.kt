@@ -151,23 +151,27 @@ fun AccountScreen(navController: NavController) {
             AccountMenuItem(
                 iconRes = R.drawable.ic_person,  // Personal Info Icon
                 text = "Personal Info",
-                onClick = { /* Navigate to Personal Info */ }
+                onClick = { /* Navigate to Personal Info */
+                    navController.navigate(Screen.ManageAccount.route)
+                }
             )
-            AccountMenuItem(
-                iconRes = R.drawable.ic_notifications,  // Notifications Icon
-                text = "Notifications",
-                onClick = { /* Navigate to Notifications */ }
-            )
+//            AccountMenuItem(
+//                iconRes = R.drawable.ic_notifications,  // Notifications Icon
+//                text = "Notifications",
+//                onClick = { /* Navigate to Notifications */ }
+//            )
             AccountMenuItem(
                 iconRes = R.drawable.ic_info,  // About Icon
                 text = "About",
-                onClick = { /* Navigate to About */ }
+                onClick = { /* Navigate to About */
+                    navController.navigate(Screen.About.route)
+                }
             )
-            AccountMenuItem(
-                iconRes = R.drawable.ic_theme,  // Theme Preferences Icon
-                text = "Theme Preferences",
-                onClick = { /* Open Theme Settings */ }
-            )
+//            AccountMenuItem(
+//                iconRes = R.drawable.ic_theme,  // Theme Preferences Icon
+//                text = "Theme Preferences",
+//                onClick = { /* Open Theme Settings */ }
+//            )
 //            Spacer(modifier = Modifier.weight(1f)) // Pushes the logout button to the bottom
 
             // Logout Button
