@@ -67,6 +67,12 @@ fun AppNavHost(navController: NavHostController, modifier: Modifier) {
         composable(Screen.AddNote.route) {  AddNoteScreen(navController) }
         composable(Screen.Login.route) {  LoginScreen(navController) }
         composable(Screen.SignUp.route) {  SignUpScreen(navController) }
+
+        composable(Screen.EditNoteDetail.route) { backStackEntry ->
+            val noteId = backStackEntry.arguments?.getString("noteId") ?: "Unknown"
+            EditNoteScreen(navController, noteId)
+        }
+
         composable(Screen.Splash.route) {
             SplashScreen(
                 onNavigate = {

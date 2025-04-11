@@ -16,10 +16,12 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.zIndex
 import androidx.navigation.NavController
 import com.ossy.noteapphybrid.R
 import com.ossy.noteapphybrid.model.NoteEntity
 import com.ossy.noteapphybrid.viewmodel.NoteViewModel
+import org.koin.androidx.compose.koinViewModel
 import java.util.*
 
 
@@ -27,8 +29,8 @@ import java.util.*
 fun EditNoteScreen(
     navController: NavController,
     noteId: String,
-    noteViewModel: NoteViewModel
 ) {
+    val noteViewModel: NoteViewModel = koinViewModel()
     // Trigger data loading
     LaunchedEffect(noteId) {
         noteViewModel.getNoteDetails(noteId)
@@ -53,6 +55,7 @@ fun EditNoteScreen(
         topBar = {
             TopAppBar(
                 title = { Text("Edit Note") },
+                modifier = Modifier.padding(top = WindowInsets.statusBars.asPaddingValues().calculateTopPadding()),
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
                         Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
@@ -76,7 +79,11 @@ fun EditNoteScreen(
                         )
                         navController.popBackStack()  // Navigate back after saving
                     }
-                }
+                },
+                backgroundColor = colorResource(id = R.color.teal_700),
+                modifier = Modifier
+                    .padding(bottom = 70.dp, end = 16.dp)
+                    .zIndex(1f)
             ) {
                 Icon(Icons.Default.Check, contentDescription = "Save Note")
             }

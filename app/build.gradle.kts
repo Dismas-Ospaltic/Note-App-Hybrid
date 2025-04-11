@@ -129,4 +129,9 @@ dependencies {
 
 //for Dynamic Status Bar colors
     implementation("com.google.accompanist:accompanist-systemuicontroller:0.31.2-alpha")
+
+    //font Awesome Icons
+    implementation("br.com.devsrsouza.compose.icons:font-awesome:1.1.1")
+
+
 }

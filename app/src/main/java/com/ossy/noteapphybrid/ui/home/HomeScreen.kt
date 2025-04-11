@@ -2,6 +2,7 @@ package com.ossy.noteapphybrid.ui.home
 
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -19,8 +20,13 @@ import androidx.compose.ui.zIndex
 import androidx.navigation.NavController
 import com.ossy.noteapphybrid.R
 import com.ossy.noteapphybrid.model.NoteEntity
+import com.ossy.noteapphybrid.navigation.Screen
 import com.ossy.noteapphybrid.utils.DynamicStatusBar
 import com.ossy.noteapphybrid.viewmodel.NoteViewModel
+import compose.icons.FontAwesomeIcons
+import compose.icons.fontawesomeicons.Solid
+import compose.icons.fontawesomeicons.solid.Thumbtack
+import compose.icons.fontawesomeicons.solid.Trash
 import org.koin.androidx.compose.koinViewModel
 import java.text.SimpleDateFormat
 import java.util.*
@@ -28,7 +34,9 @@ import java.util.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen(navController: NavController, noteViewModel: NoteViewModel = koinViewModel()) {
+fun HomeScreen(navController: NavController) {
+
+    val noteViewModel: NoteViewModel = koinViewModel()
     val notes by noteViewModel.notes.collectAsState()
     val selectedNotes = remember { mutableStateOf<Set<String>>(emptySet()) }
 
@@ -48,8 +56,14 @@ fun HomeScreen(navController: NavController, noteViewModel: NoteViewModel = koin
                             selectedNotes.value = emptySet()
                         }) {
                             Icon(
-                                painter = painterResource(id = R.drawable.ic_delete),
-                                contentDescription = "Delete"
+//                                painter = painterResource(id = R.drawable.ic_delete),
+//
+//                                contentDescription = "Delete"
+
+                                imageVector = FontAwesomeIcons.Solid.Trash,
+                                contentDescription = "Delete",
+                                tint = colorResource(id = R.color.darkLight),
+                                modifier = Modifier.size(24.dp)
                             )
                         }
                         Spacer(modifier = Modifier.width(8.dp))
@@ -58,8 +72,11 @@ fun HomeScreen(navController: NavController, noteViewModel: NoteViewModel = koin
 //                            selectedNotes.clear()
                         }) {
                             Icon(
-                                painter = painterResource(id = R.drawable.ic_pin),
-                                contentDescription = "Pin"
+                                imageVector = FontAwesomeIcons.Solid.Thumbtack,
+                                contentDescription = "Pin",
+                                tint = colorResource(id = R.color.darkLight),
+                                modifier = Modifier.size(24.dp)
+
                             )
                         }
                     }
@@ -80,7 +97,9 @@ fun HomeScreen(navController: NavController, noteViewModel: NoteViewModel = koin
                     contentDescription = "Add Note"
                 )
             }
-        }
+        },
+        modifier = Modifier
+            .background(colorResource(id = R.color.white))
     ) { paddingValues ->
         if (notes.isEmpty()) {
             Box(
@@ -115,7 +134,9 @@ fun HomeScreen(navController: NavController, noteViewModel: NoteViewModel = koin
                                 }
                             } else {
                                 // Handle regular click (e.g., navigate to note details)
-                                navController.navigate("edit_note/${note.noteId}")
+//                                navController.navigate("edit_note/${note.noteId}")
+
+                                navController.navigate(Screen.EditNoteDetail.createRoute(note.noteId))
                             }
                         }
                     )
@@ -147,9 +168,9 @@ fun NoteItem(
                 }),
         colors = CardDefaults.cardColors(
             containerColor = if (isSelected) {
-                colorResource(id = R.color.colorful)
+                colorResource(id = R.color.border_color)
             } else {
-                colorResource(id = R.color.transparent_dark)
+                colorResource(id = R.color.border_color)
             }
         )
     ) {
@@ -157,7 +178,12 @@ fun NoteItem(
             if (isSelected) {
                 Checkbox(
                     checked = true,
-                    onCheckedChange = { onLongPress() }
+                    onCheckedChange = { onLongPress() },
+                            colors = CheckboxDefaults.colors(
+                            checkedColor = colorResource(id = R.color.teal_700),
+                    uncheckedColor = colorResource(id = R.color.darkLight),
+                    checkmarkColor = colorResource(id = R.color.white)
+                )
                 )
             }
             Column(modifier = Modifier.padding(16.dp)) {
