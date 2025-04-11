@@ -41,9 +41,9 @@ sealed class Screen(val route: String) {
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun AppNavHost(navController: NavHostController, modifier: Modifier) {
-
-      val context = LocalContext.current
-    val userPreferences = UserPreferencesManager(/* required args here */ context)
+//
+//      val context = LocalContext.current
+//    val userPreferences = UserPreferencesManager(/* required args here */ context)
 //    private val userPreferences: UserPreferencesManager by inject() // Inject UserPreferencesManager
 
 //                // Observe user login state
@@ -63,7 +63,7 @@ fun AppNavHost(navController: NavHostController, modifier: Modifier) {
         popExitTransition = { slideOutHorizontally(targetOffsetX = { 1000 }) + fadeOut() }
     ) {
         composable(Screen.Home.route) {  HomeScreen(navController) }
-        composable(Screen.Account.route) { AccountScreen(navController, userPreferences) }  //TO_DO fix later
+        composable(Screen.Account.route) { AccountScreen(navController) }  //TO_DO fix later
         composable(Screen.AddNote.route) {  AddNoteScreen(navController) }
         composable(Screen.Login.route) {  LoginScreen(navController) }
         composable(Screen.SignUp.route) {  SignUpScreen(navController) }

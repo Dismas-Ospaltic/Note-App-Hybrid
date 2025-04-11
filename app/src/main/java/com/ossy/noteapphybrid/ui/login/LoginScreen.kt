@@ -45,6 +45,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.ossy.noteapphybrid.R
+import com.ossy.noteapphybrid.navigation.Screen
 import com.ossy.noteapphybrid.viewmodel.AuthViewModel
 import org.koin.androidx.compose.koinViewModel
 
@@ -285,7 +286,9 @@ fun LoginScreen(navController: NavController) {
         Spacer(modifier = Modifier.height(8.dp))
 
         Row(horizontalArrangement = Arrangement.Center) {
-            TextButton(onClick = { navController.navigate("signup") }) {
+            TextButton(onClick = {
+                navController.navigate(Screen.SignUp.route)
+            }) {
                 Text("Don't have an account? Sign Up", fontSize = 14.sp)
             }
             Spacer(modifier = Modifier.width(16.dp))

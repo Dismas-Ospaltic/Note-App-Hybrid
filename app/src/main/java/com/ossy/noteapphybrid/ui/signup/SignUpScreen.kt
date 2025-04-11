@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.ossy.noteapphybrid.R
+import com.ossy.noteapphybrid.navigation.Screen
 
 //import com.example.noteapphybrid.R
 
@@ -355,7 +356,9 @@ fun SignUpScreen(navController: NavController) {
         Spacer(modifier = Modifier.height(8.dp))
 
         // Login Link
-        TextButton(onClick = { navController.navigate("login") }) {
+        TextButton(onClick = {
+            navController.navigate(Screen.Login.route)
+        }) {
             Text("Already have an account? Login", fontSize = 14.sp)
         }
     }
