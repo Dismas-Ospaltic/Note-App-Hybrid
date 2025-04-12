@@ -26,9 +26,11 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -45,6 +47,8 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.ossy.noteapphybrid.R
+import com.ossy.noteapphybrid.data.datastore.UserData
+import com.ossy.noteapphybrid.data.datastore.UserPreferencesManager
 import com.ossy.noteapphybrid.navigation.Screen
 import com.ossy.noteapphybrid.viewmodel.AuthViewModel
 import org.koin.androidx.compose.koinViewModel
@@ -62,6 +66,16 @@ fun LoginScreen(navController: NavController) {
 
     val viewModel: AuthViewModel = koinViewModel()
     val context = LocalContext.current
+
+    val userPreferences = UserPreferencesManager(navController.context)
+
+    val coroutineScope = rememberCoroutineScope() // ✅ Correct way to create a coroutine scope
+    // Collect user email from DataStore
+    val userData by userPreferences.userData.collectAsState(initial = UserData("", "", "", false))
+
+    if (userData.isLoggedIn) {
+        navController.navigate(Screen.Home.route)
+    }
 
     Column(
         modifier = Modifier.fillMaxSize().padding(16.dp),
@@ -129,18 +143,18 @@ fun LoginScreen(navController: NavController) {
 
                 isLoading = true  // Show loader
 
-//                viewModel.login(email, password) { success, message, token, refreshToken, userEmail ->
-//                    isLoading = false  // Hide loader after login attempt
-//
-//                    if (success) {
-//                        Toast.makeText(context, "Login successful!${token}", Toast.LENGTH_SHORT).show()
-//                        navController.navigate("main")
-//                    } else {
-//                        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
-//                    }
-//                }
-                Toast.makeText(context, "Login successful!", Toast.LENGTH_SHORT).show()
-                navController.navigate("main")
+                viewModel.login(email, password) { success, message, token, refreshToken, userEmail ->
+                    isLoading = false  // Hide loader after login attempt
+
+                    if (success) {
+                        Toast.makeText(context, "Login successful!${token}", Toast.LENGTH_SHORT).show()
+                        navController.navigate(Screen.Home.route)
+                    } else {
+                        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+                    }
+                }
+//                Toast.makeText(context, "Login successful!", Toast.LENGTH_SHORT).show()
+//                navController.navigate(Screen.Home.route)
             },
             modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(8.dp),

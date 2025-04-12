@@ -25,7 +25,11 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.ossy.noteapphybrid.R
+import com.ossy.noteapphybrid.data.datastore.UserData
+import com.ossy.noteapphybrid.data.datastore.UserPreferencesManager
 import com.ossy.noteapphybrid.navigation.Screen
+import com.ossy.noteapphybrid.viewmodel.AuthViewModel
+import org.koin.androidx.compose.koinViewModel
 
 //import com.example.noteapphybrid.R
 
@@ -216,8 +220,22 @@ fun SignUpScreen(navController: NavController) {
 
     var passwordVisible by remember { mutableStateOf(false) }
     var confirmPasswordVisible by remember { mutableStateOf(false) }
+    var isLoading by remember { mutableStateOf(false) }
 
+    val viewModel: AuthViewModel = koinViewModel()
     val context = LocalContext.current
+
+
+
+    val userPreferences = UserPreferencesManager(navController.context)
+
+    val coroutineScope = rememberCoroutineScope() // ✅ Correct way to create a coroutine scope
+    // Collect user email from DataStore
+    val userData by userPreferences.userData.collectAsState(initial = UserData("", "", "", false))
+
+    if (userData.isLoggedIn) {
+        navController.navigate(Screen.Home.route)
+    }
 
     Column(
         modifier = Modifier
@@ -342,15 +360,38 @@ fun SignUpScreen(navController: NavController) {
                     return@Button
                 }
 
+
+                isLoading = true  // Show loader
+
+                viewModel.register(email, password) { success, message ->
+                    isLoading = false  // Hide loader after login attempt
+
+                    if (success) {
+                        Toast.makeText(context, "Sign Up Successful!", Toast.LENGTH_SHORT).show()
+                        navController.navigate(Screen.Login.route)
+                    } else {
+                        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+                    }
+                }
                 // Success
-                Toast.makeText(context, "Sign Up Successful!", Toast.LENGTH_SHORT).show()
-                navController.navigate("login")
+//                Toast.makeText(context, "Sign Up Successful!", Toast.LENGTH_SHORT).show()
+//                navController.navigate("login")
             },
             modifier = Modifier.fillMaxWidth(),
+            shape = RoundedCornerShape(8.dp),
             colors = ButtonDefaults.buttonColors(containerColor = colorResource(id = R.color.main_color)),
-            shape = RoundedCornerShape(8.dp)
+            enabled = !isLoading  // Disable button while loading
         ) {
-            Text("Sign Up")
+            if (isLoading) {
+                androidx.compose.material.CircularProgressIndicator(
+                    color = Color.White,
+                    modifier = Modifier.width(24.dp).height(24.dp)
+                )
+                Spacer(modifier = Modifier.width(8.dp))
+                Text("Please wait...")
+            } else {
+                Text("Sign Up")
+            }
         }
 
         Spacer(modifier = Modifier.height(8.dp))

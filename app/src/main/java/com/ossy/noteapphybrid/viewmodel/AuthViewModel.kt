@@ -1,77 +1,15 @@
 package com.ossy.noteapphybrid.viewmodel
 
-//import androidx.lifecycle.ViewModel
-//import androidx.lifecycle.viewModelScope
-//import com.example.noteapphybrid.data.datastore.UserPreferencesManager
-//import kotlinx.coroutines.launch
-//
-//class AuthViewModel(private val userPreferences: UserPreferencesManager) : ViewModel() {
-//
-//    fun loginUser(userId: String, userEmail: String, authToken: String , refToken: String) {
-//        viewModelScope.launch {
-//            userPreferences.saveUserData(userId, userEmail, authToken , refToken)
-//        }
-//    }
-//}
-
-
-
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ossy.noteapphybrid.data.datastore.UserPreferencesManager
 import com.ossy.noteapphybrid.model.LoginResponse
 import com.ossy.noteapphybrid.repository.AuthRepository
 import com.google.gson.Gson
+import com.ossy.noteapphybrid.model.RegisterResponse
 import kotlinx.coroutines.launch
 import okio.IOException
 import retrofit2.Response
-
-//// ViewModel to manage authentication logic
-//class AuthViewModel(private val repository: AuthRepository) : ViewModel() {
-//
-//    // Holds login response data
-//    var loginResponse: Response<LoginResponse>? = null
-//        private set
-//
-//    // Handles login logic
-//    fun login(email: String, password: String, onResult: (Boolean, String) -> Unit) {
-//        viewModelScope.launch {
-//            val response = repository.login(email, password)
-//            if (response.isSuccessful) {
-//                loginResponse = response
-//                onResult(true, response.body()?.message ?: "Login successful")
-//            } else {
-//                onResult(false, "Login failed")
-//            }
-//        }
-//    }
-//}
-
-//class AuthViewModel(private val repository: AuthRepository) : ViewModel() {
-//
-//    var loginResponse: LoginResponse? = null
-//        private set
-//
-//    fun login(email: String, password: String, onResult: (Boolean, String, String?) -> Unit) {
-//        viewModelScope.launch {
-//            val response: Response<LoginResponse> = repository.login(email, password)
-//
-//            if (response.isSuccessful) {
-//                response.body()?.let { body ->
-//                    loginResponse = body
-//                    val token = body.data["access_token"] as? String
-//                    onResult(true, body.message, token)
-//                } ?: onResult(false, "Unexpected response", null)
-//            } else if(){
-//                onResult(false, body.message, null)
-//            }else{
-//                onResult(false, "Login failed", null)
-//            }
-//        }
-//    }
-//}
-
-
 
 class AuthViewModel(private val userPreferences: UserPreferencesManager, private val repository: AuthRepository) : ViewModel() {
 
@@ -88,7 +26,8 @@ class AuthViewModel(private val userPreferences: UserPreferencesManager, private
                         if (body.status == "success") {
                             val token = body.data["access_token"] as? String
                             val refreshToken = body.data["refresh_token"] as? String
-                            val userEmail = body.data["email"] as? String
+//                            val userEmail = body.data["email"] as? String
+                            val userEmail = email
 
                             // Save user data if token is available
                             if (!token.isNullOrEmpty()) {
@@ -112,6 +51,45 @@ class AuthViewModel(private val userPreferences: UserPreferencesManager, private
             }
         }
     }
+
+
+    fun register(
+        email: String,
+        password: String,
+        onResult: (Boolean, String) -> Unit
+    ) {
+        viewModelScope.launch {
+            try {
+                val response: Response<RegisterResponse> = repository.register(email, password)
+
+                if (response.isSuccessful) {
+                    response.body()?.let { body ->
+                        if (body.status == "success") {
+//                            val token = body.data["access_token"] as? String
+//                            val refreshToken = body.data["refresh_token"] as? String
+//                            val userEmail = email
+
+                            onResult(true, body.message)
+                        } else {
+                            onResult(false, body.message)
+                        }
+                    } ?: onResult(false, "Unexpected response")
+                } else {
+                    val errorMessage = extractErrorMessage(response)
+                    onResult(false, errorMessage)
+                }
+            } catch (e: IOException) {
+                onResult(false, "Network error. Please check your connection.")
+            } catch (e: Exception) {
+                onResult(false, "An unexpected error occurred.")
+            }
+        }
+    }
+
+
+
+
+
 
     // Extracts the server error message from errorBody
     private fun extractErrorMessage(response: Response<*>): String {

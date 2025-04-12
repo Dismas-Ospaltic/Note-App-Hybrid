@@ -39,9 +39,9 @@ fun AccountScreen(navController: NavController) {
     val backgroundColor = colorResource(id = R.color.white)
     DynamicStatusBar(backgroundColor)
 
-//    val coroutineScope = rememberCoroutineScope() // ✅ Correct way to create a coroutine scope
-//    // Collect user email from DataStore
-//    val userData by userPreferences.userData.collectAsState(initial = UserData("", "", "", false))
+    val coroutineScope = rememberCoroutineScope() // ✅ Correct way to create a coroutine scope
+    // Collect user email from DataStore
+    val userData by userPreferences.userData.collectAsState(initial = UserData("", "", "", false))
 
     Scaffold(
         topBar = {
@@ -82,8 +82,8 @@ fun AccountScreen(navController: NavController) {
                     )
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(
-//                        text = if (userData.isLoggedIn) userData.userEmail else "Log In / Register",
-                        text = "Log In / Register",
+                        text = if (userData.isLoggedIn) userData.userEmail else "Log In / Register",
+//                        text = "Log In / Register",
                         fontSize = 16.sp,
                         fontWeight = FontWeight.Medium
                     )
@@ -95,66 +95,72 @@ fun AccountScreen(navController: NavController) {
 
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Text(
-                        text = "Choose to Continue",
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 24.sp
-                    )
-                    Spacer(modifier = Modifier.height(16.dp))
 
-                    // Login Button
-                    Button(
-                        onClick = {
-                            navController.navigate(Screen.Login.route)
-                        },
-                        shape = RoundedCornerShape(2.dp),
-                        colors = ButtonDefaults.buttonColors(containerColor = colorResource(id = R.color.darkLight)),
-                        modifier = Modifier.fillMaxWidth().padding(horizontal = 32.dp) // Add padding for better layout
-                    ) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.login),
-                            contentDescription = "Google Icon",
-                            modifier = Modifier.size(24.dp),
-                            tint = Color.Unspecified
+                    if (!userData.isLoggedIn) {
+                        Text(
+                            text = "Choose to Continue",
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 24.sp
                         )
-                        Spacer(modifier = Modifier.width(8.dp))
-                        Text("Login")
+                        Spacer(modifier = Modifier.height(16.dp))
+
+                        // Login Button
+                        Button(
+                            onClick = {
+                                navController.navigate(Screen.Login.route)
+                            },
+                            shape = RoundedCornerShape(2.dp),
+                            colors = ButtonDefaults.buttonColors(containerColor = colorResource(id = R.color.darkLight)),
+                            modifier = Modifier.fillMaxWidth()
+                                .padding(horizontal = 32.dp) // Add padding for better layout
+                        ) {
+                            Icon(
+                                painter = painterResource(id = R.drawable.login),
+                                contentDescription = "Google Icon",
+                                modifier = Modifier.size(24.dp),
+                                tint = Color.Unspecified
+                            )
+                            Spacer(modifier = Modifier.width(8.dp))
+                            Text("Login")
+                        }
+
+                        Spacer(modifier = Modifier.height(16.dp))
+
+                        // Google Sign-In Button
+                        Button(
+                            onClick = {
+                                navController.navigate(Screen.SignUp.route)
+                            },
+                            shape = RoundedCornerShape(2.dp),
+                            colors = ButtonDefaults.buttonColors(containerColor = colorResource(id = R.color.shadeBlue)),
+                            modifier = Modifier.fillMaxWidth()
+                                .padding(horizontal = 32.dp) // Add padding for better layout
+                        ) {
+                            Icon(
+                                painter = painterResource(id = R.drawable.adduser),
+                                contentDescription = "Google Icon",
+                                modifier = Modifier.size(24.dp),
+                                tint = Color.Unspecified
+                            )
+                            Spacer(modifier = Modifier.width(8.dp))
+                            Text("SignUp")
+                        }
+
+                        Spacer(modifier = Modifier.height(16.dp))
                     }
-
-                    Spacer(modifier = Modifier.height(16.dp))
-
-                    // Google Sign-In Button
-                    Button(
-                        onClick = {
-                            navController.navigate(Screen.SignUp.route)
-                        },
-                        shape = RoundedCornerShape(2.dp),
-                        colors = ButtonDefaults.buttonColors(containerColor = colorResource(id = R.color.shadeBlue)),
-                        modifier = Modifier.fillMaxWidth().padding(horizontal = 32.dp) // Add padding for better layout
-                    ) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.adduser),
-                            contentDescription = "Google Icon",
-                            modifier = Modifier.size(24.dp),
-                            tint = Color.Unspecified
-                        )
-                        Spacer(modifier = Modifier.width(8.dp))
-                        Text("SignUp")
-                    }
-
-                    Spacer(modifier = Modifier.height(16.dp))
-
                 }
             }
 
             // Menu Items with Vector Assets from res/drawable
-            AccountMenuItem(
-                iconRes = R.drawable.ic_person,  // Personal Info Icon
-                text = "Personal Info",
-                onClick = { /* Navigate to Personal Info */
-                    navController.navigate(Screen.ManageAccount.route)
-                }
-            )
+            if (userData.isLoggedIn){
+                AccountMenuItem(
+                    iconRes = R.drawable.ic_person,  // Personal Info Icon
+                    text = "Personal Info",
+                    onClick = { /* Navigate to Personal Info */
+                        navController.navigate(Screen.ManageAccount.route)
+                    }
+                )
+              }
 //            AccountMenuItem(
 //                iconRes = R.drawable.ic_notifications,  // Notifications Icon
 //                text = "Notifications",
@@ -175,12 +181,13 @@ fun AccountScreen(navController: NavController) {
 //            Spacer(modifier = Modifier.weight(1f)) // Pushes the logout button to the bottom
 
             // Logout Button
+            if (userData.isLoggedIn){
             Button(
                 onClick = {
-//                    coroutineScope.launch {
-//                        userPreferences.clearUserData() // ✅ Clear user session data
-//
-//                    }
+                    coroutineScope.launch {
+                        userPreferences.clearUserData() // ✅ Clear user session data
+
+                    }
                 },
                 colors = ButtonDefaults.buttonColors(containerColor = colorResource(id = R.color.dark)),
                 modifier = Modifier
@@ -191,7 +198,7 @@ fun AccountScreen(navController: NavController) {
             ) {
                 Text(text = "Logout", fontSize = 16.sp, fontWeight = FontWeight.Bold, color = Color.White)
             }
-
+           }
 
         }
     }
